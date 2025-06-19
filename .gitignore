@@ -1,0 +1,33 @@
+v# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python/
+env/
+venv/
+*.egg-info/
+.mypy_cache/
+.pytest_cache/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# IDEs
+.vscode/ # Pasta de configuração do VS Code (opcional, pode ser útil versionar se houver configs compartilhadas)
+.idea/   # IntelliJ / PyCharm
+
+# Dados
+#data/      # Ignorar dados brutos (geralmente não versionados)
+#models/    # Ignorar modelos treinados (podem ser grandes e são gerados)
+
+# Logs
+*.log
+logs/
+
+# Temporários
+*.tmp
+*.swp
+*~
+.DS_Store # macOS
+Thumbs.db # Windows
