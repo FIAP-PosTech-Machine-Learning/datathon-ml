@@ -19,7 +19,7 @@ venv/
 
 # Dados
 data/      # Ignorar dados brutos (geralmente não versionados)
-#models/    # Ignorar modelos treinados (podem ser grandes e são gerados)
+models/    # Ignorar modelos treinados (podem ser grandes e são gerados)
 
 # Logs
 *.log

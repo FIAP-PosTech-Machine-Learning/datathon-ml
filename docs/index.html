@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infográfico | Análise do Funil de Recrutamento da Decision</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F0F8FB;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+                max-height: 450px;
+            }
+        }
+        .kpi-value {
+            color: #0077B6;
+        }
+        .section-title {
+            color: #005082;
+        }
+        .flowchart-step {
+            background-color: #ffffff;
+            border: 2px solid #9AD6EA;
+            color: #005082;
+        }
+        .flowchart-arrow {
+            color: #0077B6;
+        }
+    </style>
+</head>
+<body class="text-gray-700">
+
+    <header class="bg-white shadow-md p-6">
+        <div class="container mx-auto text-center">
+            <h1 class="text-3xl md:text-4xl font-bold section-title">Decifrando o 'Match' Perfeito</h1>
+            <p class="text-lg mt-2 text-gray-600">Uma Análise Visual do Funil de Recrutamento da Decision</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="overview" class="mb-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 section-title">O Desafio: Um Oceano de Possibilidades</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <p class="text-lg font-semibold text-gray-500">Interações Totais</p>
+                    <p class="text-5xl font-bold kpi-value">107.494</p>
+                    <p class="mt-2 text-gray-600">Registros de interações entre vagas e candidatos analisados.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <p class="text-lg font-semibold text-gray-500">Candidatos Únicos</p>
+                    <p class="text-5xl font-bold kpi-value">42.482</p>
+                    <p class="mt-2 text-gray-600">Profissionais buscando oportunidades na base de dados.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <p class="text-lg font-semibold text-gray-500">Vagas Únicas</p>
+                    <p class="text-5xl font-bold kpi-value">14.081+</p>
+                    <p class="mt-2 text-gray-600">Vagas com informações detalhadas que formam o núcleo da análise.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="funnel" class="mb-12">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl md:text-3xl font-bold text-center mb-2 section-title">O Funil de Recrutamento</h2>
+                <p class="text-center text-gray-600 mb-6 max-w-3xl mx-auto">A jornada de um candidato envolve várias etapas. O gráfico abaixo mostra a distribuição dos status de todas as 107.494 prospecções, revelando onde a maioria dos candidatos se concentra no processo.</p>
+                <div class="chart-container" style="height: 500px; max-height: 600px;">
+                    <canvas id="funnelChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="success-rate" class="mb-12 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            <div class="md:col-span-1 bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-center mb-4 section-title">Taxa de Sucesso Crítica</h2>
+                 <div class="chart-container" style="height: 250px; max-height: 300px;">
+                    <canvas id="successRateChart"></canvas>
+                </div>
+            </div>
+            <div class="md:col-span-2 text-left">
+                <h3 class="text-3xl font-bold kpi-value">Apenas 5.13% dos "Matches" Resultam em Contratação</h3>
+                <p class="mt-4 text-lg text-gray-600">De um total de 107.494 interações, apenas 5.515 resultaram em uma contratação bem-sucedida. Este dado revela o principal desafio da Decision: a necessidade de um processo mais eficiente para identificar os candidatos com maior potencial de sucesso em meio a um grande volume de prospecções.</p>
+                <p class="mt-4 text-lg text-gray-600">Otimizar essa taxa, mesmo que em poucos pontos percentuais, representa um ganho massivo em agilidade e eficiência para o negócio.</p>
+            </div>
+        </section>
+        
+        <section id="profiles" class="mb-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 section-title">Análise de Perfis: Vaga vs. Candidato</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-center mb-1 section-title">Nível Profissional</h3>
+                    <p class="text-center text-gray-600 mb-4">Comparação entre os níveis profissionais mais requisitados nas vagas e os níveis declarados pelos candidatos.</p>
+                    <div class="chart-container">
+                        <canvas id="professionalLevelChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold text-center mb-1 section-title">Proficiência em Inglês</h3>
+                    <p class="text-center text-gray-600 mb-4">Análise da demanda por fluência em inglês nas vagas versus a autodeclaração dos candidatos.</p>
+                     <div class="chart-container">
+                        <canvas id="englishLevelChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="data-quality" class="mb-12">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl md:text-3xl font-bold text-center mb-2 section-title">O Desafio da Qualidade dos Dados</h2>
+                <p class="text-center text-gray-600 mb-6 max-w-3xl mx-auto">A eficácia de qualquer modelo de IA depende da qualidade dos dados. Nossa análise revelou que muitas colunas importantes possuem um alto percentual de informações ausentes, um obstáculo que precisa ser superado.</p>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome da Coluna</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Percentual de Dados Ausentes</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">informacoes_basicas_nome_substituto</td><td class="px-6 py-4 whitespace-nowrap text-sm text-red-600 font-semibold">98.88%</td></tr>
+                            <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">formacao_e_idiomas_outro_curso</td><td class="px-6 py-4 whitespace-nowrap text-sm text-red-600 font-semibold">98.37%</td></tr>
+                            <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">informacoes_profissionais_qualificacoes</td><td class="px-6 py-4 whitespace-nowrap text-sm text-red-600 font-semibold">98.27%</td></tr>
+                             <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">todas as colunas de "cargo_atual"</td><td class="px-6 py-4 whitespace-nowrap text-sm text-red-600 font-semibold">~98.27%</td></tr>
+                            <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">perfil_vaga_habilidades_comportamentais</td><td class="px-6 py-4 whitespace-nowrap text-sm text-orange-500 font-semibold">~75-80%</td></tr>
+                            <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">formacao_e_idiomas_nivel_espanhol</td><td class="px-6 py-4 whitespace-nowrap text-sm text-yellow-500 font-semibold">~16.12%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="mb-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 section-title">O Caminho para a Solução com IA</h2>
+            <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Com base nos insights da análise, o próximo passo é construir uma pipeline de Machine Learning para prever o sucesso do "match". O processo envolve as seguintes etapas:</p>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-0">
+                <div class="flowchart-step rounded-lg p-4 text-center w-full md:w-1/4">
+                    <div class="text-4xl mb-2">1️⃣</div>
+                    <h3 class="font-bold">Engenharia de Features</h3>
+                    <p class="text-sm">Tratar dados ausentes e transformar dados categóricos e textuais em features numéricas.</p>
+                </div>
+                <div class="text-4xl flowchart-arrow mx-4 hidden md:block">→</div>
+                <div class="text-4xl flowchart-arrow my-4 md:hidden">↓</div>
+                <div class="flowchart-step rounded-lg p-4 text-center w-full md:w-1/4">
+                    <div class="text-4xl mb-2">2️⃣</div>
+                    <h3 class="font-bold">Análise de Texto (NLP)</h3>
+                    <p class="text-sm">Utilizar técnicas como TF-IDF para calcular a similaridade entre os CVs e as descrições das vagas.</p>
+                </div>
+                <div class="text-4xl flowchart-arrow mx-4 hidden md:block">→</div>
+                 <div class="text-4xl flowchart-arrow my-4 md:hidden">↓</div>
+                <div class="flowchart-step rounded-lg p-4 text-center w-full md:w-1/4">
+                    <div class="text-4xl mb-2">3️⃣</div>
+                    <h3 class="font-bold">Treinamento do Modelo</h3>
+                    <p class="text-sm">Treinar um modelo de classificação para aprender os padrões de contratações bem-sucedidas.</p>
+                </div>
+                 <div class="text-4xl flowchart-arrow mx-4 hidden md:block">→</div>
+                 <div class="text-4xl flowchart-arrow my-4 md:hidden">↓</div>
+                 <div class="flowchart-step rounded-lg p-4 text-center w-full md:w-1/4">
+                    <div class="text-4xl mb-2">4️⃣</div>
+                    <h3 class="font-bold">Deployment via API</h3>
+                    <p class="text-sm">Disponibilizar o modelo treinado através de uma API para uso em produção pela equipe Decision.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white mt-12 p-4 text-center text-gray-500 text-sm">
+        <p>Infográfico gerado a partir da Análise Exploratória de Dados do Datathon Decision - FIAP. Junho, 2025.</p>
+    </footer>
+
+<script>
+    const brilliantBlues = {
+        primary: '#0077B6',   // Medium Blue
+        secondary: '#00A1E4', // Bright Blue
+        dark: '#005082',      // Dark Blue
+        light: '#9AD6EA',     // Light Blue
+        bg: '#F0F8FB',        // Background
+        accent: '#FFB703',    // A contrasting accent color (optional, for highlights)
+    };
+
+    const tooltipConfig = {
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        if (Array.isArray(label)) {
+                            return label.join(' ');
+                        }
+                        return label;
+                    }
+                }
+            }
+        }
+    };
+    
+    function wrapText(text, maxLength = 16) {
+        if (text.length <= maxLength) {
+            return text;
+        }
+        const words = text.split(' ');
+        let lines = [];
+        let currentLine = '';
+        for (const word of words) {
+            if ((currentLine + ' ' + word).length > maxLength) {
+                lines.push(currentLine);
+                currentLine = word;
+            } else {
+                currentLine += (currentLine ? ' ' : '') + word;
+            }
+        }
+        if (currentLine) {
+            lines.push(currentLine);
+        }
+        return lines;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const funnelData = {
+            labels: [
+                'Prospect', 'Encaminhado ao Requisitante', 'Inscrito', 
+                'Não Aprovado pelo Cliente', 'Contratado pela Decision', 'Desistiu',
+                'Não Aprovado pelo RH', 'Não Aprovado pelo Requisitante', 'Entrevista Técnica',
+                'Sem interesse nesta vaga', 'Entrevista com Cliente'
+            ].map(label => wrapText(label, 25)),
+            values: [40026, 32242, 7958, 6981, 5515, 4698, 3530, 1530, 1158, 1152, 938]
+        };
+
+        const funnelCtx = document.getElementById('funnelChart').getContext('2d');
+        new Chart(funnelCtx, {
+            type: 'bar',
+            data: {
+                labels: funnelData.labels,
+                datasets: [{
+                    label: 'Número de Prospecções',
+                    data: funnelData.values,
+                    backgroundColor: brilliantBlues.light,
+                    borderColor: brilliantBlues.primary,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                ...tooltipConfig,
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    ...tooltipConfig.plugins,
+                    legend: { display: false },
+                    title: {
+                        display: false,
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Número de Ocorrências'
+                        }
+                    }
+                }
+            }
+        });
+
+        const successRateCtx = document.getElementById('successRateChart').getContext('2d');
+        new Chart(successRateCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Contratados', 'Não Contratados'],
+                datasets: [{
+                    data: [5515, 101979],
+                    backgroundColor: [brilliantBlues.primary, brilliantBlues.light],
+                    borderColor: [brilliantBlues.dark, '#ffffff'],
+                    borderWidth: 2,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                 ...tooltipConfig,
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                     ...tooltipConfig.plugins,
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Proporção de Contratações',
+                        font: { size: 14 }
+                    }
+                }
+            }
+        });
+
+        const professionalLevelCtx = document.getElementById('professionalLevelChart').getContext('2d');
+        new Chart(professionalLevelCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Analista', 'Sênior', 'Pleno', 'Júnior'],
+                datasets: [
+                    {
+                        label: 'Vagas Requisitando',
+                        data: [20060, 19546, 8501, 2450],
+                        backgroundColor: brilliantBlues.secondary,
+                    },
+                    {
+                        label: 'Candidatos Disponíveis',
+                        data: [32, 350, 54, 18],
+                        backgroundColor: brilliantBlues.light,
+                    }
+                ]
+            },
+            options: {
+                ...tooltipConfig,
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Quantidade' }
+                    }
+                },
+                plugins: {
+                    ...tooltipConfig.plugins,
+                    title: { display: false },
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+
+        const englishLevelCtx = document.getElementById('englishLevelChart').getContext('2d');
+        new Chart(englishLevelCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Básico', 'Intermediário', 'Avançado', 'Fluente'],
+                datasets: [
+                    {
+                        label: 'Vagas Requisitando',
+                        data: [4738, 4734, 3192, 1373],
+                        backgroundColor: brilliantBlues.secondary,
+                    },
+                    {
+                        label: 'Candidatos com Nível',
+                        data: [239, 137, 72, 30],
+                        backgroundColor: brilliantBlues.light,
+                    }
+                ]
+            },
+            options: {
+                ...tooltipConfig,
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Quantidade' }
+                    }
+                },
+                plugins: {
+                    ...tooltipConfig.plugins,
+                    title: { display: false },
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
