@@ -1,7 +1,7 @@
 from fastapi.routing import APIRouter
 from fastapi import HTTPException, status
-from api.schemas.schema import Prediction, InputData # Caminho ajustado
-from api.services.service import make_prediction    # Caminho ajustado
+from api.schemas.schemas import Prediction, InputData # Caminho ajustado
+from api.services.prediction_service import make_prediction    # Caminho ajustado
 
 router = APIRouter()
 
