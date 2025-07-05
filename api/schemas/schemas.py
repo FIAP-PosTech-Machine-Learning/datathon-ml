@@ -37,7 +37,7 @@ class InputData(BaseModel):
     informacoes_pessoais_estado_civil: Optional[str] = Field(None, description="Estado civil do candidato.")
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "cv_pt": "Sou um profissional com experiência em Python e Machine Learning...",
                 "informacoes_profissionais_conhecimentos_tecnicos": "Python, SQL, AWS, Docker, Machine Learning",
