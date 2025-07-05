@@ -1,64 +1,130 @@
-# datathon-ml
+<table align="right">
+ <tr><td><a href="README_PTBR.md"><img src="imgs/brazil.png" height="15"> Portuguese</a></td></tr>
+ <tr><td><a href="README.md"><img src="imgs/united-states.png" height="15"> English</a></td></tr>
+</table>
 
-##   Análise Exploratória de Dados (EDA) - Projeto Datathon Decision
-Visão Geral do Projeto##
-Este projeto de Machine Learning tem como objetivo otimizar o processo de recrutamento e seleção da empresa Decision, especializada em conectar talentos de TI a vagas específicas. Atualmente, a Decision enfrenta desafios na agilidade do "match" entre candidatos e vagas, padronização de entrevistas e identificação do real engajamento do candidato. Nossa solução visa propor uma inteligência artificial para prever a probabilidade de sucesso de um "match" (contratação), aprendendo com dados históricos.
+# **FIAP - DATATHON**
 
-Fase 1: Análise Exploratória de Dados (EDA)
-A Análise Exploratória de Dados (EDA) é a primeira etapa crucial do nosso trabalho. Nela, mergulhamos nos dados brutos da Decision (vagas.json, prospects.json, applicants.json) para entender sua estrutura, identificar padrões, avaliar a qualidade e extrair insights que guiarão a construção do modelo preditivo.
+<br/>
+<p align="center">
+  <a href="https://www.fiap.com.br/"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Fiap-logo-novo.jpg" width="300" alt="FIAP"></a>
+</p>
+<br>
 
-Passo a Passo da Análise (Células do Notebook EDA.ipynb)
-Cada seção abaixo corresponde a uma célula executada no notebook, com seu propósito e resultados chave:
+## **Repository Structure**
 
-#1--- Importando as bibliotecas:
+The repository contains several directories, each with its specific functionality:
 
-Propósito: Preparar o ambiente, carregando as ferramentas essenciais (Pandas para manipulação de dados, JSON para leitura de arquivos, Matplotlib/Seaborn para visualização).
+### **API**
 
-Resultado para o Negócio: Garante que temos as ferramentas necessárias para trabalhar com grandes volumes de dados e visualizá-los eficientemente.
+This directory contains the project's API, built with FastAPI and integrated with Prometheus for monitoring.
 
-#2--- Carregamento dos Dados:
+### **Models**
 
-Propósito: Carregar os três arquivos JSON fornecidos pela Decision (vagas.json, prospects.json, applicants.json) para a memória, tornando-os acessíveis para análise.
+This directory contains the trained model used by the API.
 
-Resultado para o Negócio: Valida que temos acesso aos dados históricos e que eles podem ser lidos, sendo a base para qualquer análise futura.
+### **Notebooks**
 
-#3--- Convertendo JSONs para DataFrames Pandas:
+This directory contains data processing and model training notebooks used in the project.
 
-Propósito: Transformar a estrutura complexa dos arquivos JSON (que são como árvores de informação) em tabelas organizadas (DataFrames do Pandas). Isso torna os dados fáceis de visualizar e manipular.
+### **Streamlit**
 
-Resultado para o Negócio: Dados brutos são convertidos em um formato estruturado, que permite uma compreensão clara do número de vagas, candidatos e prospecções.
+This directory contains a chatbot that interacts with the model.
 
-#4--- Normalização (Achatar JSONs Aninhados para Facilitação):
+## **Technologies Used**
 
-Propósito: Os dados continham informações "aninhadas" (dicionários dentro de dicionários, como informacoes_basicas dentro de vagas). Esta etapa "achata" essa estrutura, transformando cada informação aninhada em uma coluna própria (ex: informacoes_basicas_titulo_vaga). Também corrigimos um problema com o ID da vaga (job_id) que não estava sendo reconhecido corretamente.
+- **FastAPI for API Development:** FastAPI, a modern, high-performance web framework for building APIs, was used to develop the back-end services. It provides asynchronous support, automatic interactive API documentation, and high speed, making it optimal for creating scalable and efficient APIs.
+  
+- **Prometheus for Monitoring:** Prometheus is a widely used open-source monitoring and alerting tool designed to collect and store application metrics in real time. In this application, Prometheus is used to monitor the performance of the FastAPI service, including metrics like request count, response time per route, and HTTP status codes.
 
-Resultado para o Negócio: Organiza os dados em um formato tabular amplo (DataFrame jobs_df_flat e applicants_df_flat com muitas colunas), onde cada característica da vaga ou do candidato é uma coluna acessível, facilitando a análise e a engenharia de features.
+Metrics are exposed at the `/metrics` endpoint and can be consumed by Prometheus for analysis and visualization in dashboards such as Grafana.
 
-#5--- Combinação dos DataFrames para Análise de Match:
+- **Streamlit:** Streamlit is an open-source Python library that allows you to quickly create interactive web interfaces with minimal effort and no frontend knowledge required.
 
-Propósito: Juntar as informações de vagas, prospecções e candidatos em uma única tabela (final_df). Cada linha dessa tabela agora representa um par "candidato-vaga" e seu status de prospecção.
+<br>
 
-Resultado para o Negócio: Criamos uma visão unificada de todo o processo de recrutamento, com 107.494 registros de interações candidato-vaga e 112 colunas de informações combinadas. Isso é a base completa para a predição. A execução prolongada desta célula destacou o volume considerável de dados que estamos manipulando.
+## **How to use?**
 
-#6--- Definição da Variável Alvo: is_successful_match:
+This project uses a FastAPI for back-end development. Follow the steps below to configure the environment and run the application.
 
-Propósito: Identificar e criar a variável que o nosso modelo irá prever: se um "match" foi bem-sucedido ou não. Definimos "sucesso" como "Contratado pela Decision".
+### **Pre-requisites**
+Before running the application, ensure you have the following installed:
 
-Resultado para o Negócio: Transformamos o status de prospecção em um indicador claro de sucesso (1 para Contratado, 0 para outros). A análise revelou um forte desbalanceamento de classes (cerca de 5.515 contratados vs. mais de 101.979 não contratados). Isso é uma descoberta crucial que exigirá atenção especial na fase de treinamento do modelo para evitar previsões enviesadas.
+- Python 3.12+
+- pip (Python package manager)
+- FastAPI and related dependencies
+- Prometheus and related dependencies
+- Streamlit and related dependencies
 
-#7--- Análise de Dados Faltantes em final_df:
+#### **01. Clone the repository**
 
-Propósito: Avaliar a quantidade de informações ausentes (NaN) em cada coluna do DataFrame combinado.
+```bash
+git clone https://github.com/FIAP-PosTech-Machine-Learning/datathon-ml.git
+cd datathon-ml
+```
 
-Resultado para o Negócio: Identificamos que muitas colunas têm um volume significativo de dados faltantes (algumas com mais de 98% de ausência, outras com 16%, 75%). Isso aponta para a necessidade de estratégias de limpeza de dados, como remoção de colunas com excesso de NaNs ou imputação de valores (preencher com "Não Informado", média, moda) para garantir que o modelo não seja prejudicado por informações incompletas.
+#### **02. Install Python dependencies**
+Make sure you have a virtual environment set up to avoid dependency conflicts. Then install the required dependencies from requirements.txt.
+```bash
+python -m venv .venv        # Create and activate the virtual environment
+source .venv/bin/activate   # For Linux/Mac
+.venv\Scripts\activate      # For Windows
+```
 
-#8--- Exploração de Colunas Chave para Feature Engineering:
+```bash
+pip install -r requirements.txt     # Install dependencies
+```
 
-Propósito: Aprofundar a análise em colunas específicas consideradas mais importantes para o "match", como níveis profissionais, de idiomas, conhecimentos técnicos e atividades de vagas.
+#### **03. Run the FastAPI application**
+Once the environment are set up, you can start the FastAPI server:
+```bash
+uvicorn api.main:app --reload
+```
 
-Resultado para o Negócio: Confirmamos que campos de texto (currículos, descrições de vagas) são extremamente ricos e exigirão processamento de linguagem natural (NLP) para extrair similaridades. Também validamos a presença de dados categóricos (tipos de contratação, áreas de atuação) e numéricos (remuneração, datas) que serão transformados em features.
+#### **04. Access the API**
 
-Conclusão da EDA e Próximos Passos
-A fase de EDA foi concluída com sucesso, nos fornecendo uma compreensão robusta dos dados da Decision. Entendemos suas estruturas, a qualidade das informações, a distribuição da variável de sucesso e os principais desafios (desbalanceamento e dados faltantes).
+- Open your browser and navigate to http://127.0.0.1:8000/ to access the API.
 
-Próximo Passo: Com base nestas observações, o projeto avançará para a implementação das funções de Pré-processamento e Feature Engineering em um script Python modular (src/data_processing.py). Esta fase transformará os dados brutos em um formato numérico e estruturado, pronto para alimentar o modelo de Machine Learning.
+FastAPI automatically generates interactive API documentation, which can be accessed at:
+- Swagger UI: http://127.0.0.1:8000
+- ReDoc: http://127.0.0.1:8000/redoc
+
+#### **05. Testing the Application**
+You can use Swagger UI to test the API endpoints, or use tools like curl, Postman, or httpie to send requests to the API.
+If you prefer using the Streamlit interface, run the Streamlit app and use the web-based chat to make model predictions.
+
+#### **06. Using Prometheus**
+To use Prometheus, you must specify its configuration file. It is located inside the `API` directory, under the `config` folder:
+```bash
+prometheus --config.file=api/config/prometheus.yml
+```
+
+## Common Issues
+- **Missing dependencies:** If any dependencies are missing, check requirements.txt to ensure everything is installed.
+<br>
+
+## **Developers**
+
+<table border="0" align="center">
+  <tr>
+  <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/71346377?v=4" width="160px" alt="Foto do Alexandre"/><br>
+      <sub>
+        <a href="https://www.github.com/alexandre-tvrs">@Alexandre Tavares</a>
+      </sub>
+    </td>
+        <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/160500127?v=4" width="160px" alt="Foto do Paulo"/><br>
+      <sub>
+        <a href="https://github.com/PauloMukai">@Paulo Mukai</a>
+      </sub>
+    </td>
+    </td>
+        <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/160500128?v=4" width="160px" alt="Foto da Vanessa"/><br>
+      <sub>
+        <a href="https://github.com/AnjosVanessa">@AnjosVanessa</a>
+      </sub>
+    </td>
+  </tr>
+</table>
