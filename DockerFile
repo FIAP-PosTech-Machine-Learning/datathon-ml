@@ -1,0 +1,41 @@
+# Dockerfile
+
+# Usa uma imagem base oficial do Python para garantir o ambiente correto.
+# Escolhi python:3.12-slim-bookworm por ser uma versão leve e conter o Python 3.12+
+FROM python:3.12-slim-bookworm
+
+# Define o diretório de trabalho dentro do contêiner
+WORKDIR /app
+
+# Copia o arquivo requirements.txt para o diretório de trabalho
+COPY requirements.txt .
+
+# Instala as dependências Python
+# --no-cache-dir: não armazena o cache pip para reduzir o tamanho da imagem
+# --upgrade pip: garante que o pip esteja atualizado
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Copia as pastas essenciais para o runtime da API
+# A pasta 'api' contém o código da API
+COPY api ./api
+# A pasta 'models' contém os modelos treinados e pipelines
+COPY models ./models
+# Se 'src/data_processing.py' ou 'src/model_training_adjusted.py'
+# forem importados na API (mesmo que indiretamente para alguma lógica compartilhada),
+# eles também precisarão ser copiados.
+# Pelo que vi, 'prediction_service.py' apenas importa joblib e pandas, mas não diretamente 'data_processing'.
+# No entanto, a lógica de feature engineering foi replicada no 'prediction_service.py'
+# Se a lógica de pré-processamento de texto estiver em um arquivo separado
+# e não diretamente copiada para 'prediction_service.py', ela precisaria ser acessível.
+# Por simplicidade e segurança, se 'src' contiver módulos compartilhados, é bom copiar:
+COPY src ./src
+
+# Expõe a porta que o FastAPI vai usar (padrão do Uvicorn é 8000)
+EXPOSE 8000
+
+# Comando para rodar a aplicação FastAPI com Uvicorn
+# --host 0.0.0.0: permite que a aplicação seja acessível de fora do contêiner
+# --port 8000: define a porta
+# api.main:app: aponta para a instância 'app' no módulo 'main' dentro do pacote 'api'
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]

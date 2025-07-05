@@ -1,9 +1,10 @@
 from fastapi.routing import APIRouter
 from fastapi import HTTPException, status
-from api.schemas.schemas import Prediction, InputData # Caminho ajustado
+from api.schemas.schemas import Prediction, InputData  # Caminho ajustado
 from api.services.prediction_service import make_prediction    # Caminho ajustado
 
 router = APIRouter()
+
 
 @router.post(
     "/predict",
@@ -26,8 +27,8 @@ async def predict(data: InputData):
         HTTPException: Se houver um erro durante o processo de previsão (ex: modelo não carregado, erro interno).
     """
     try:
-        # Converte o objeto Pydantic para um dicionário, que é o que make_prediction espera
-        prediction_probability = make_prediction(data.dict())
+        # --- ATENÇÃO: Mudança de .dict() para .model_dump() para Pydantic V2 ---
+        prediction_probability = make_prediction(data.model_dump())
         return {"match_probability": prediction_probability}
     except FileNotFoundError as fnfe:
         raise HTTPException(
@@ -41,7 +42,7 @@ async def predict(data: InputData):
         )
     except Exception as e:
         import traceback
-        traceback.print_exc() # Para ver o erro no console do servidor durante o desenvolvimento
+        traceback.print_exc()  # Para ver o erro no console do servidor durante o desenvolvimento
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Ocorreu um erro inesperado ao fazer a previsão: {e}. "
