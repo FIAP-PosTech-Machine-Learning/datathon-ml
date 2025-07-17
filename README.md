@@ -1,8 +1,3 @@
-<table align="right">
- <tr><td><a href="README_PTBR.md"><img src="imgs/brazil.png" height="15"> Portuguese</a></td></tr>
- <tr><td><a href="README.md"><img src="imgs/united-states.png" height="15"> English</a></td></tr>
-</table>
-
 # **FIAP - DATATHON**
 
 <br/>
@@ -11,99 +6,119 @@
 </p>
 <br>
 
-## **Repository Structure**
+## **Infraestrutura do repositório**
 
-The repository contains several directories, each with its specific functionality:
+O reposório possui diversos diretórios, cada um contendo sua respectiva funcionalidade:
 
 ### **API**
 
-This directory contains the project's API, built with FastAPI and integrated with Prometheus for monitoring.
+Esse diretório possui a API do projeto, construida em FastAPI e integrada com o Prometheus para monitoramento.
 
 ### **Models**
 
-This directory contains the trained model used by the API.
+Esse diretório possui o modelo treinado, usado na API.
 
 ### **Notebooks**
 
-This directory contains data processing and model training notebooks used in the project.
+Esse diretório possui os notebooks de processamento de dados e treinamento do modelo utilizado no projeto.
 
 ### **Streamlit**
 
-This directory contains a chatbot that interacts with the model.
+Esse diretório possui um chatbot que interage com o modelo.
 
-## **Technologies Used**
+## **Tecnologias Utilizadas**
 
-- **FastAPI for API Development:** FastAPI, a modern, high-performance web framework for building APIs, was used to develop the back-end services. It provides asynchronous support, automatic interactive API documentation, and high speed, making it optimal for creating scalable and efficient APIs.
-  
-- **Prometheus for Monitoring:** Prometheus is a widely used open-source monitoring and alerting tool designed to collect and store application metrics in real time. In this application, Prometheus is used to monitor the performance of the FastAPI service, including metrics like request count, response time per route, and HTTP status codes.
+- **FastAPI para Desenvolvimento de API:** O FastAPI, um framework web moderno e de alto desempenho para construção de APIs, foi utilizado para desenvolver os serviços do back-end e fornecimento do modelo. Ele oferece suporte assíncrono, documentação interativa automática da API e alta velocidade, tornando-o ideal para criar APIs escaláveis e eficientes.
 
-Metrics are exposed at the `/metrics` endpoint and can be consumed by Prometheus for analysis and visualization in dashboards such as Grafana.
+- **Prometheus para monitoramento:** O Prometheus é uma ferramenta de monitoramento e alerta open-source amplamente utilizada para coletar e armazenar métricas de aplicações em tempo real. Nesta aplicação, o Prometheus é utilizado para monitorar o desempenho da API FastAPI, incluindo métricas como número de requisições, tempo de resposta por rota e status HTTP.
 
-- **Streamlit:** Streamlit is an open-source Python library that allows you to quickly create interactive web interfaces with minimal effort and no frontend knowledge required.
+As métricas são expostas no endpoint /metrics e podem ser consumidas pelo Prometheus para análise e visualização em dashboards como o Grafana.
+
+- **Streamlit:** Streamlit é uma biblioteca Python open-source que permite criar interfaces web interativas de forma rápida e simples, sem a necessidade de conhecimentos em front-end.
 
 <br>
 
-## **How to use?**
+## **Como usar?**
 
-This project uses a FastAPI for back-end development. Follow the steps below to configure the environment and run the application.
+Este projeto utiliza o FastAPI para o desenvolvimento do back-end. Siga os passos abaixo para configurar o ambiente e executar a aplicação.
 
-### **Pre-requisites**
-Before running the application, ensure you have the following installed:
+### **Pré-requisitos**
+Antes de executar a aplicação, certifique-se de ter os seguintes itens instalados:
 
 - Python 3.12+
-- pip (Python package manager)
-- FastAPI and related dependencies
-- Prometheus and related dependencies
-- Streamlit and related dependencies
-
-#### **01. Clone the repository**
+- pip (gerenciador de pacotes Python)
+- FastAPI e dependências relacionadas
+- Prometheus e dependências relacionadas
+- Streamlit e dependências relacionadas
+- Docker (caso queira usa-lo em container)
+  
+#### **01. Clone o repositório**
 
 ```bash
 git clone https://github.com/FIAP-PosTech-Machine-Learning/datathon-ml.git
 cd datathon-ml
 ```
 
-#### **02. Install Python dependencies**
-Make sure you have a virtual environment set up to avoid dependency conflicts. Then install the required dependencies from requirements.txt.
+#### **02. Instalação do projeto**
+O projeto pode ser instalado de duas maneiras: localmente ou através do Docker.
+
+##### **02.1. Execução local**
+Certifique-se de ter um ambiente virtual configurado para evitar conflitos de dependências. Em seguida, instale as dependências listadas em requirements.txt.
 ```bash
-python -m venv .venv        # Create and activate the virtual environment
-source .venv/bin/activate   # For Linux/Mac
-.venv\Scripts\activate      # For Windows
+python -m venv .venv        # Crie e ative o ambiente virtual
+source .venv/bin/activate   # Para Linux/Mac
+.venv\Scripts\activate      # Para Windows
 ```
 
 ```bash
-pip install -r requirements.txt     # Install dependencies
+pip install -r requirements.txt     # Instale as dependências
 ```
 
-#### **03. Run the FastAPI application**
-Once the environment are set up, you can start the FastAPI server:
+#### **Execute a aplicação FastAPI**
+Após configurar o ambiente, você pode iniciar o servidor FastAPI:
 ```bash
 uvicorn api.main:app --reload
 ```
 
-#### **04. Access the API**
+##### **02.2. Execução com Docker**
+Certifique-se de o Docker instalado em seu computador.
+```bash
+docker build -t datathon-ml .
+```
 
-- Open your browser and navigate to http://127.0.0.1:8000/ to access the API.
+Esse comando irá faze a instalação das dependências e criar uma imagem no Docker.
 
-FastAPI automatically generates interactive API documentation, which can be accessed at:
+#### **Execute a aplicação FastAPI**
+Após gerar a imagem, você deve iniciar um container com ela:
+```bash
+docker run -p 8000:8000 -d datathon-ml
+```
+
+#### **03. Acesse a API**
+
+- Abra seu navegador e navegue para http://127.0.0.1:8000/ para acessar a API.
+
+O FastAPI gera automaticamente uma documentação interativa da API, que pode ser acessada em:
 - Swagger UI: http://127.0.0.1:8000
 - ReDoc: http://127.0.0.1:8000/redoc
 
-#### **05. Testing the Application**
-You can use Swagger UI to test the API endpoints, or use tools like curl, Postman, or httpie to send requests to the API.
-If you prefer using the Streamlit interface, run the Streamlit app and use the web-based chat to make model predictions.
+#### **04. Testando a Aplicação**
 
-#### **06. Using Prometheus**
-To use Prometheus, you must specify its configuration file. It is located inside the `API` directory, under the `config` folder:
+Você pode usar o Swagger UI para testar os endpoints da API ou usar ferramentas como curl, Postman ou httpie para enviar requisições à API. Caso prefire usar o streamlit execute o comando de inicialização do mesmo e usa o chat web para fazer as previsões do modelo.
+
+### **05. Usando o Prometheus**
+
+Para usar o prometheus, deve apontar o arquivo de configuração do mesmo. Ele se encontra dentro do diretório da `API`, no diretório `config`
 ```bash
 prometheus --config.file=api/config/prometheus.yml
 ```
 
-## Common Issues
-- **Missing dependencies:** If any dependencies are missing, check requirements.txt to ensure everything is installed.
+
+## Problemas Comuns
+- **Dependências faltantes:** Se faltar alguma dependência, verifique o arquivo requirements.txt para garantir que tudo esteja instalado.
 <br>
 
-## **Developers**
+## **Desenvolvedores**
 
 <table border="0" align="center">
   <tr>
@@ -113,7 +128,7 @@ prometheus --config.file=api/config/prometheus.yml
         <a href="https://www.github.com/alexandre-tvrs">@Alexandre Tavares</a>
       </sub>
     </td>
-        <td align="center">
+    <td align="center">
       <img src="https://avatars.githubusercontent.com/u/160500127?v=4" width="160px" alt="Foto do Paulo"/><br>
       <sub>
         <a href="https://github.com/PauloMukai">@Paulo Mukai</a>
